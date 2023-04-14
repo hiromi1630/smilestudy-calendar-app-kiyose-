@@ -1,0 +1,21 @@
+export const createSheetValueOfEvents = (
+  id: string,
+  date: string,
+  timeStart: string,
+  timeEnd: string,
+  teacher: string,
+  classroom: string,
+  subject: string,
+  lessonType: string,
+  done: boolean,
+) => [
+  id,
+  date,
+  timeStart,
+  timeEnd,
+  teacher,
+  classroom,
+  subject,
+  lessonType,
+  done,
+];

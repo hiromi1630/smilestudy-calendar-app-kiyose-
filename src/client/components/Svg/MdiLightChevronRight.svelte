@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24"
+  ><path
+    fill="currentColor"
+    d="m8.59 18.16l5.66-5.66l-5.66-5.66l-.7.71l4.95 4.95l-4.95 4.95l.7.71Z"
+  /></svg
+>
