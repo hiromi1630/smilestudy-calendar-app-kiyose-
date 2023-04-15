@@ -1,7 +1,6 @@
 <script lang="ts">
   import DateEventsColumn from './DateEventsColumn.svelte';
   import {
-    WEEKDAYS,
     DisplayedMonth,
     SelectedDate,
     CalendarEvents,
@@ -34,7 +33,10 @@
     for (let i = 0; i < 7 * 6; i++) {
       const className =
         'btn btn-block btn-sm ' +
-        (today.isSame(date) ? 'btn-secondary btn-outline ' : 'btn-ghost ') +
+        // (date.isSame(today)
+        (date.format('YYYYMMDD') === today.format('YYYYMMDD')
+          ? 'btn-secondary btn-outline '
+          : 'btn-ghost ') +
         (date.month() !== month ? 'btn-disabled ' : 'rounded-full ') +
         (date.day() === 0 ? 'text-error' : '') +
         (date.day() === 6 ? 'text-info' : '');
