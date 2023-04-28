@@ -25,6 +25,7 @@
     "deploy:student": "dotenv cross-var \"clasp push && clasp deploy -i $DEPLOY_ID_STUDENT -d 生徒用\"",
     "release:calendar": "run-s env:calendar build copy deploy:calendar clean",
     "release:student": "run-s env:student build copy deploy:student clean",
+    "release:all": "run-s release:student release:calendar",
     "debug": "run-s build copy push clean"
   },
   "devDependencies": {
@@ -32,6 +33,7 @@
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.49",
     "@tsconfig/svelte": "^3.0.0",
     "@types/google-apps-script": "^1.0.51",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "autoprefixer": "^10.4.7",

@@ -9,11 +9,11 @@
 
 <div class="lg:flex flex-row">
   <div class="basis-3/4">
-    <div class="grid grid-cols-7 m-3">
+    <div class="grid grid-cols-7 m-1">
       <Header />
       <Cells />
     </div>
-    <div class="grid grid-cols-2 m-3">
+    <div class="grid grid-cols-2 m-1">
       <button class="btn btn-block btn-ghost" on:click={DisplayedMonth.prev}>
         <MdiLightChevronLeft />
       </button>

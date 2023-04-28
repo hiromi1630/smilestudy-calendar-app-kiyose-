@@ -31,7 +31,7 @@
       const studentId = params.id;
       assert(
         studentId && studentId.length > 0,
-        'パラメータにIDが指定されていません。\nお手数ですが、講師に再度URLを発行させて下さい。',
+        'パラメータにIDが指定されていません。お手数ですが、講師に再度URLを発行させて下さい。',
       );
 
       if (params.year) {
@@ -64,9 +64,9 @@
 
         OverlayState.set(false);
       } else if (promise.ok === false) {
-        console.error(promise.error.message);
+        console.error(promise.error);
 
-        OverlayText.set(promise.error.message);
+        OverlayText.set(promise.error);
         OverlayType.set('Error');
       }
     } catch (error) {
@@ -79,11 +79,11 @@
 <Tailwind />
 
 <main data-theme={$Themes[$ThemeIndex]}>
-  <div class="drawer">
+  <div class="drawer overflow-y-scroll">
     <div class="drawer-content">
       <NavigationBar sideBar={false}>
         <div slot="start">
-          <button class="btn btn-ghost normal-case text-xl">
+          <button class="btn btn-ghost normal-case text-lg">
             {year}年 {month + 1}月
           </button>
         </div>

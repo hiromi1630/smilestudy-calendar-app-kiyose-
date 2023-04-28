@@ -8,14 +8,14 @@
 
 <!-- Navbar -->
 <div class="navbar bg-neutral text-neutral-content">
-  <div class="navbar-start">
+  <div class="flex-1">
     {#if sideBar}
       <DrawerToggler />
     {/if}
     <slot name="start"><!-- optional fallback --></slot>
   </div>
 
-  <div class="navbar-end">
+  <div class="flex-none">
     <slot name="end"><!-- optional fallback --></slot>
     <button
       class="btn btn-circle"

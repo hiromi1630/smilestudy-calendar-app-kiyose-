@@ -10,7 +10,7 @@ type APIResult =
     }
   | {
       ok: false;
-      error: Error;
+      error: string;
     };
 
 // const ErrorHandler = <T>(process: () => T): APIResult<T> => {
@@ -27,7 +27,7 @@ const ErrorHandler = (process: () => any): APIResult => {
     console.log(error);
     return {
       ok: false,
-      error: new Error(String(error)),
+      error: String(error),
     };
   }
 };
@@ -41,7 +41,7 @@ export const DeleteEventById = (id: string): APIResult =>
 export const AddEvents = (events: any[][]): APIResult =>
   ErrorHandler(() => {
     appendDataToSheet(SHEET_ID_MAIN, ...events);
-    sortSheet(SHEET_ID_MAIN, [3, 2]);
+    sortSheet(SHEET_ID_MAIN, [2, 3]);
   });
 
 export const GetScriptProperties = (): APIResult =>

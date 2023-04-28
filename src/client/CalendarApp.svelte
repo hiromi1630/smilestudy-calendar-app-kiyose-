@@ -38,9 +38,9 @@
 
         OverlayState.set(false);
       } else if (promise.ok === false) {
-        console.error(promise.error.message);
+        console.error(promise.error);
 
-        OverlayText.set(promise.error.message);
+        OverlayText.set(promise.error);
         OverlayType.set('Error');
       }
     } catch (error) {

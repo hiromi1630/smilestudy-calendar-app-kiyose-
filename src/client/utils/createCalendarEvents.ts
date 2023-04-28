@@ -77,6 +77,7 @@ export const createCalendarEvents = (
       subject: {
         id: subject[0],
         name: subject[1],
+        color: subject[2],
       },
       lessonType: {
         id: lessonType[0],

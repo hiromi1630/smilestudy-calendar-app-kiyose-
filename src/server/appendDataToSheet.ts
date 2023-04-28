@@ -1,9 +1,16 @@
-const appendDataToSheet = (id: number, ...data: any[]) => {
+const appendDataToSheet = (id: number, ...data: any[]): boolean => {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheets().filter((sheet) => sheet.getSheetId() === id)[0];
 
-  const table = sheet.getDataRange().getDisplayValues();
-  assert(table[0].length == data[0].length);
+  const table = sheet.getDataRange().getDisplayValues().slice(1);
+  assert(
+    table[0].length == data[0].length,
+    'データの形式が元データと合いません。',
+  );
+  assert(
+    data.every((v) => v.length === data[0].length),
+    'データの形式が不正です。',
+  );
 
   if (id === SHEET_ID_MAIN) {
     const classrooms = ss
@@ -12,28 +19,54 @@ const appendDataToSheet = (id: number, ...data: any[]) => {
       .getDataRange()
       .getDisplayValues();
 
-    // reject if duplicated data detected
+    const idxDate = SheetColumnIndex.main.date;
+    const idxTimeStart = SheetColumnIndex.main.timeStart;
+    const idxTimeEnd = SheetColumnIndex.main.timeEnd;
+    const idxClassroom = SheetColumnIndex.main.classroom;
+
+    // 入力の各データに関して、授業時間が重複しているものがあれば
+    // 反映させずにエラーを吐く
     // TODO it will be a heavy task
     for (const d of data) {
-      assert(
-        table
-          .filter((arr) => d[1] === arr[1])
-          .findIndex((arr) => {
-            if (!isTimeOverlapped(arr[2], arr[3], d[2], d[3])) return false;
+      for (const event of table.filter((arr) => d[idxDate] === arr[idxDate])) {
+        if (
+          !isTimeOverlapped(
+            event[idxTimeStart],
+            event[idxTimeEnd],
+            d[idxTimeStart],
+            d[idxTimeEnd],
+          )
+        )
+          continue;
 
-            const a = classrooms.find((v) => v[0] === d[5])?.slice(2);
-            const b = classrooms.find((v) => v[0] === arr[5])?.slice(2);
+        // 集団授業データの中から、生徒個人を抽出する
+        const a = classrooms.find((v) => v[0] === d[idxClassroom])?.slice(2);
+        const b = classrooms
+          .find((v) => v[0] === event[idxClassroom])
+          ?.slice(2);
 
-            assert(a && b);
+        assert(
+          a && b,
+          '入力データに含まれる生徒のデータが存在しない可能性があります。',
+        );
 
-            // 同じ生徒が授業を受けている
-            return new Set([...a, ...b]).size !== [...a, ...b].length;
-          }) === -1,
-      );
+        a.push(...b);
+        const duplicated = a.some((x) => a.indexOf(x) !== a.lastIndexOf(x));
+        console.log(a, new Array(new Set(a)));
+        console.log(duplicated);
+
+        // 同じ生徒が同じ時間に授業を受けている
+        assert(
+          !duplicated,
+          `授業時間が重複している可能性があります。
+          (${d[idxDate]} ${d[idxTimeStart]})`,
+        );
+      }
+
+      table.push(d);
     }
   }
 
-  table.push(...data);
-
-  sheet.getRange(1, 1, table.length, table[0].length).setValues(table);
+  sheet.getRange(2, 1, table.length, table[0].length).setValues(table);
+  return true;
 };

@@ -97,10 +97,10 @@
         OverlayType.set('Success');
         OverlayText.set('データを送信しました。');
       } else if (promise.ok === false) {
-        console.error(promise.error.message);
+        console.error(promise.error);
 
         OverlayType.set('Error');
-        OverlayText.set('授業時間が重複しています。');
+        OverlayText.set(promise.error);
       }
 
       sendingFormValues = false;

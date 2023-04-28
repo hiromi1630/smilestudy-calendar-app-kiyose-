@@ -3,12 +3,13 @@
   import Modal from './Modal.svelte';
   import type { CalendarEvent } from '../../types';
   import { getTextColor, ColorCode } from '../../utils/getTextContrast';
-  import { HSLToRGB, stringToNumber } from '../../utils/hslToRgb';
+  import dayjs from 'dayjs';
 
   export let event: CalendarEvent;
 
   let text = '';
-  let className = 'btn btn-block btn-xs border-0';
+  let className =
+    'btn btn-block btn-xs border-0 rounded text-clip text-ellipsis whitespace-nowrap';
 
   $: modalId = `modal-${event.id}`;
 
@@ -17,7 +18,7 @@
 
   const createBackgroundColor = () =>
     $EventButtonType === 'Subject'
-      ? HSLToRGB(stringToNumber(event.subject.name), 70, 58)
+      ? `#${event.subject.color}`
       : event.teacher.color;
 
   let backgroundColor = createBackgroundColor();
@@ -25,6 +26,7 @@
   let textColor = getTextColor(backgroundColor as ColorCode);
 
   $: {
+    const start = dayjs();
     const { teacher, timeStart, timeEnd, classroom, subject } = event;
 
     backgroundColor = createBackgroundColor();
@@ -33,7 +35,7 @@
     if ($EventButtonType === 'Default') {
       if (!width || width < 130) {
         text = `${teacher.familyName}`;
-      } else if (width < 420) {
+      } else if (width < 300) {
         text = `${teacher.familyName} - ${classroom.name}`;
       } else {
         text =
@@ -42,8 +44,8 @@
       }
     } else if ($EventButtonType === 'Subject') {
       if (!width || width < 130) {
-        text = `${timeStart} ${subject.name}`;
-      } else if (width < 420) {
+        text = `${timeStart} ${subject.name.substring(0, 1)}`;
+      } else if (width < 240) {
         text = `${timeStart} ${subject.name} (${teacher.name})`;
       } else {
         text = `${timeStart} - ${timeEnd} : ${subject.name} (${teacher.name})`;

@@ -31,29 +31,28 @@
 
     // content
     for (let i = 0; i < 7 * 6; i++) {
-      const className =
-        'btn btn-block btn-sm ' +
-        // (date.isSame(today)
-        (date.format('YYYYMMDD') === today.format('YYYYMMDD')
-          ? 'btn-secondary btn-outline '
-          : 'btn-ghost ') +
-        (date.month() !== month ? 'btn-disabled ' : 'rounded-full ') +
-        (date.day() === 0 ? 'text-error' : '') +
-        (date.day() === 6 ? 'text-info' : '');
+      const className = `btn btn-block btn-sm
+        ${
+          date.format('YYYYMMDD') === today.format('YYYYMMDD')
+            ? 'btn-secondary btn-outline'
+            : 'btn-ghost'
+        }
+        ${date.month() !== month ? 'btn-disabled rounded-sm' : 'rounded-full'}
+        ${date.day() === 0 ? 'text-error' : ''}
+        ${date.day() === 6 ? 'text-info' : ''}`;
 
-      cells = [
-        ...cells,
-        {
-          className,
-          date: dayjs(date),
-          events: $CalendarEvents[date.format('YYYY/MM/DD') as DateFormat],
-        },
-      ];
+      cells.push({
+        className,
+        date: dayjs(date),
+        events: $CalendarEvents[date.format('YYYY/MM/DD') as DateFormat],
+      });
 
       date = date.add(1, 'day');
 
       if (date.month() !== month && date.day() === 0) break;
     }
+
+    cells = cells;
   });
 </script>
 

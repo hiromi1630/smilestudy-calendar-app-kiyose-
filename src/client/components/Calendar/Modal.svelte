@@ -21,7 +21,16 @@
   let isShowingConfirmBlock: boolean = false;
   let isDeletingEvent: boolean = false;
 
-  $: ({ id, timeStart, timeEnd, teacher, classroom, subject, date } = event);
+  $: ({
+    id,
+    timeStart,
+    timeEnd,
+    teacher,
+    classroom,
+    subject,
+    date,
+    lessonType,
+  } = event);
 </script>
 
 <input type="checkbox" id={modalId} class="modal-toggle" />
@@ -37,7 +46,7 @@
       <p class="font-bold text-lg py-2">{`${timeStart} - ${timeEnd}`}</p>
       <p>{`講師： ${teacher.name}`}</p>
       <p>{`生徒： ${classroom.name}`}</p>
-      <p>{`教科： ${subject.name}`}</p>
+      <p>{`教科： ${subject.name} （${lessonType.name}）`}</p>
 
       <div class="modal-action">
         {#if $EventButtonType !== 'Subject'}
