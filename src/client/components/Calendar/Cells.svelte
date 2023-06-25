@@ -9,6 +9,8 @@
   import type { Dayjs } from 'dayjs';
   import dayjs from 'dayjs';
 
+  export let width = 0;
+
   const today = dayjs();
 
   let year = 0;
@@ -67,7 +69,7 @@
     </button>
 
     {#if cell.date.month() === month}
-      <DateEventsColumn date={cell.date} />
+      <DateEventsColumn date={cell.date} width={width / 7} />
     {/if}
   </div>
 {/each}

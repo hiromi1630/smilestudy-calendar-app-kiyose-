@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { EventButtonType } from './../../stores/Calendar';
-  import Modal from './Modal.svelte';
   import type { CalendarEvent } from '../../types';
+  import Modal from './Modal.svelte';
+
+  import { EventButtonType } from './../../stores/Calendar';
   import { getTextColor, ColorCode } from '../../utils/getTextContrast';
-  import dayjs from 'dayjs';
 
   export let event: CalendarEvent;
 
@@ -14,7 +14,7 @@
   $: modalId = `modal-${event.id}`;
 
   // bind control
-  let width: number | undefined;
+  export let width: number | undefined;
 
   const createBackgroundColor = () =>
     $EventButtonType === 'Subject'
@@ -26,7 +26,6 @@
   let textColor = getTextColor(backgroundColor as ColorCode);
 
   $: {
-    const start = dayjs();
     const { teacher, timeStart, timeEnd, classroom, subject } = event;
 
     backgroundColor = createBackgroundColor();
@@ -57,7 +56,6 @@
 <label
   class={className}
   for={modalId}
-  bind:clientWidth={width}
   style="color:{textColor};background-color:{backgroundColor};"
 >
   {text}

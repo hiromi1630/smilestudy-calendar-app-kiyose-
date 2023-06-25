@@ -7,6 +7,7 @@
 
   export let date: Dayjs = dayjs();
   export let showDivider: boolean = false;
+  export let width: number = 0;
 
   $: events = $CalendarEvents[date.format('YYYY/MM/DD') as DateFormat];
 </script>
@@ -20,7 +21,7 @@
     {/if}
     {#each events as event}
       <!-- Event -->
-      <EventButton {event} />
+      <EventButton {event} width={width - 2} />
     {/each}
   {/if}
 </div>
