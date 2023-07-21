@@ -41,16 +41,16 @@
         text = `${teacher.familyName} - ${classroom.name} ${lessonTypeStr}`;
       } else {
         text =
-          `${timeStart} - ${timeEnd} : ${teacher.familyName} - ` +
+          `${timeStart} - ${timeEnd} : ${teacher.name} - ` +
           `${classroom.name} (${subject.name}) ${lessonTypeStr}`;
       }
     } else if ($EventButtonType === 'Subject') {
       if (!width || width < 130) {
         text = `${timeStart} ${subject.name.substring(0, 1)}`;
       } else if (width < 240) {
-        text = `${timeStart} ${subject.name} (${teacher.name}) ${lessonTypeStr}`;
+        text = `${timeStart} ${subject.name} (${teacher.familyName}) ${lessonTypeStr}`;
       } else {
-        text = `${timeStart} - ${timeEnd} : ${subject.name} (${teacher.name}) ${lessonTypeStr}`;
+        text = `${timeStart} - ${timeEnd} : ${subject.name} (${teacher.familyName}) ${lessonTypeStr}`;
       }
     }
   }
