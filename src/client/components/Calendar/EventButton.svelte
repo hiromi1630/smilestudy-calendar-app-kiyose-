@@ -26,7 +26,10 @@
   let textColor = getTextColor(backgroundColor as ColorCode);
 
   $: {
-    const { teacher, timeStart, timeEnd, classroom, subject } = event;
+    const { teacher, timeStart, timeEnd, classroom, subject, lessonType } =
+      event;
+
+    const lessonTypeStr = lessonType.name.substring(0, 1);
 
     backgroundColor = createBackgroundColor();
     textColor = getTextColor(backgroundColor as ColorCode);
@@ -35,19 +38,19 @@
       if (!width || width < 130) {
         text = `${teacher.familyName}`;
       } else if (width < 300) {
-        text = `${teacher.familyName} - ${classroom.name}`;
+        text = `${teacher.familyName} - ${classroom.name} ${lessonTypeStr}`;
       } else {
         text =
           `${timeStart} - ${timeEnd} : ${teacher.familyName} - ` +
-          `${classroom.name} (${subject.name})`;
+          `${classroom.name} (${subject.name}) ${lessonTypeStr}`;
       }
     } else if ($EventButtonType === 'Subject') {
       if (!width || width < 130) {
         text = `${timeStart} ${subject.name.substring(0, 1)}`;
       } else if (width < 240) {
-        text = `${timeStart} ${subject.name} (${teacher.name})`;
+        text = `${timeStart} ${subject.name} (${teacher.name}) ${lessonTypeStr}`;
       } else {
-        text = `${timeStart} - ${timeEnd} : ${subject.name} (${teacher.name})`;
+        text = `${timeStart} - ${timeEnd} : ${subject.name} (${teacher.name}) ${lessonTypeStr}`;
       }
     }
   }
