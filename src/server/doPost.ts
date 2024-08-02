@@ -14,14 +14,37 @@ type DoPost = {
 };
 
 const doPost = (e: DoPost) => {
-  const contents = JSON.parse(e.postData.contents);
-  const events = contents.events;
-  for (const event of events) {
-    // メッセージイベント以外には応答しない
-    if (event.type != 'message') {
-      continue;
-    }
+  const eventData = JSON.parse(e.postData.contents).events[0];
+  if (eventData.type == 'message' && eventData.message.text == '授業予定') {
+    //今日の授業予定を送信
+    const replyToken = eventData.replyToken;
+    postTodayLessons(replyToken);
   }
+};
+
+const postReplyWithLineBot = (text: string, replyToken: string) => {
+  const { LINE_BOT_ACCESS_TOKEN, LINE_GROUP_ID } = getScriptProperties();
+
+  const postData = {
+    replyToken: replyToken,
+    messages: [
+      {
+        type: 'text',
+        text: text,
+      },
+    ],
+  };
+
+  const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + LINE_BOT_ACCESS_TOKEN,
+    },
+    payload: JSON.stringify(postData),
+  };
+
+  UrlFetchApp.fetch('https://api.line.me/v2/bot/message/reply', options);
 };
 
 const postTextWithLineBot = (text: string) => {
@@ -87,7 +110,7 @@ const getEventsByDate = (
   return events;
 };
 
-const postTodayLessons = () => {
+const postTodayLessons = (replyToken: string) => {
   const events = getEventsByDate(new Date());
 
   let latestTime: string | undefined = undefined;
@@ -110,7 +133,7 @@ const postTodayLessons = () => {
     '\nまた、併せて定期テスト関係の収集にご協力ください。' +
     '\n宜しくお願い致します。';
 
-  postTextWithLineBot(text);
+  postReplyWithLineBot(text, replyToken);
 };
 
 const postMonthlyAnnounce = () => {
