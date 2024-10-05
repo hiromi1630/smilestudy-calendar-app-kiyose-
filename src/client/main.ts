@@ -1,4 +1,4 @@
-import App from './CalendarApp.svelte';
+import App from './StudentCalendarApp.svelte';
 
 const app = new App({
   target: document.getElementById('app'),

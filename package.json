@@ -22,7 +22,7 @@
     "push": "clasp push",
     "deploy": "clasp push && clasp deploy",
     "deploy:calendar": "bash -c 'source .env && clasp push && clasp deploy -i $DEPLOY_ID_CALENDAR -d カレンダー'",
-    "deploy:student": "bash -c 'clasp push && clasp deploy -i $DEPLOY_ID_STUDENT -d 生徒用'",
+    "deploy:student": "bash -c 'source .env && clasp push && clasp deploy -i $DEPLOY_ID_STUDENT -d 生徒用'",
     "release:calendar": "run-s env:calendar build copy deploy:calendar clean",
     "release:student": "run-s env:student build copy deploy:student clean",
     "release:all": "run-s release:student release:calendar",
