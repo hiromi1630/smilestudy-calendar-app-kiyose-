@@ -128,10 +128,7 @@ const postTodayLessons = (replyToken: string) => {
 
     text += `  ${event.teacher} - ${event.classroom}\n`;
   }
-  text +=
-    '\n授業変更がある場合は予め一報ください。' +
-    '\nまた、併せて定期テスト関係の収集にご協力ください。' +
-    '\n宜しくお願い致します。';
+  
 
   postReplyWithLineBot(text, replyToken);
 };
