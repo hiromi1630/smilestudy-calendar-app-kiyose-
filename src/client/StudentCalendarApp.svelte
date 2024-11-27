@@ -16,8 +16,15 @@
   import { assert } from './utils/assert';
   import { createCalendarEvents } from './utils/createCalendarEvents';
   import { getLocation } from './utils/getParams';
+  import { calcLessons } from './utils/calcLesson';
+  import { LessonNum } from './types';
 
+  let lessonNum: LessonNum = {};
+  let alreadyCompleteLoad: boolean = false;
   let year: number, month: number;
+  $: if (alreadyCompleteLoad) {
+    lessonNum = calcLessons($RawSheetValues, year, month);
+  }
   DisplayedMonth.subscribe((v) => {
     year = v.year();
     month = v.month();
@@ -59,10 +66,11 @@
 
         RawSheetValues.set(sheetValues);
         CalendarEvents.set(createCalendarEvents($RawSheetValues));
-
+        lessonNum = calcLessons($RawSheetValues, year, month);
         console.log($CalendarEvents);
 
         OverlayState.set(false);
+        alreadyCompleteLoad = true;
       } else if (promise.ok === false) {
         console.error(promise.error);
 
@@ -88,6 +96,11 @@
           </button>
         </div>
         <Calendar />
+        <ul>
+          {#each Object.entries(lessonNum) as [key, value]}
+            <li>{key}: {value}コマ</li>
+          {/each}
+        </ul>
       </NavigationBar>
       <Overlay />
     </div>
