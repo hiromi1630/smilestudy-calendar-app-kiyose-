@@ -90,4 +90,6 @@ export const WEEKDAYS = readable({
   SAT: 6,
 });
 
-export const EventButtonType = writable<'Subject' | 'Default'>('Default');
+export const EventButtonType = writable<'Subject' | 'Teacher' | 'Default'>(
+  'Default',
+);

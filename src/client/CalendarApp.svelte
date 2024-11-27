@@ -17,6 +17,7 @@
   import Overlay from './components/Overlay/Overlay.svelte';
   import MdiCalendarToday from './components/Svg/MdiCalendarToday.svelte';
   import StudentCalendarForm from './components/Dashboard/StudentCalendarForm.svelte';
+  import TeacherCalendarForm from './components/Dashboard/TeacherCalendarForm.svelte';
 
   OverlayType.set('Loading');
   OverlayState.set(true);
@@ -77,7 +78,10 @@
       {:else if $CurrentPage === PageId.Dashboard}
         <div class="sm:flex flex-wrap items-start">
           <ClassRegistrationForm />
-          <StudentCalendarForm />
+          <div>
+            <StudentCalendarForm />
+            <TeacherCalendarForm />
+          </div>
         </div>
         <!-- {:else if $CurrentPage === PageId.ManagerDashboard}
         <div /> -->

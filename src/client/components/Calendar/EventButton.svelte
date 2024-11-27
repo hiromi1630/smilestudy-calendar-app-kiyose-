@@ -17,7 +17,7 @@
   export let width: number | undefined;
 
   const createBackgroundColor = () =>
-    $EventButtonType === 'Subject'
+    $EventButtonType === 'Subject' || $EventButtonType === 'Teacher'
       ? `#${event.subject.color}`
       : event.teacher.color;
 
@@ -44,7 +44,10 @@
           `${timeStart} - ${timeEnd} : ${teacher.name} - ` +
           `${classroom.name} (${subject.name}) ${lessonTypeStr}`;
       }
-    } else if ($EventButtonType === 'Subject') {
+    } else if (
+      $EventButtonType === 'Subject' ||
+      $EventButtonType === 'Teacher'
+    ) {
       if (!width || width < 130) {
         text = `${timeStart} ${subject.name.substring(0, 1)}`;
       } else if (width < 240) {
